@@ -37,7 +37,7 @@ export default class Boid {
     }
 
     nextState(birds: Array<Boid>): Boid {
-        const velocity = new Vector(0, 0);
+        const velocity = this.velocity.clone();
         const others = birds.filter((other) => other.position.distance(this.position) > 0)
         velocity.add(cohension(this, others));
         velocity.add(separation(this, others));

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Triangle from './Triangle';
@@ -8,7 +8,7 @@ import Boid from './Boid';
 const width = 600;
 const height = 400;
 
-const initBirds = new Array(10).fill(null).map(() => {
+const initBirds = new Array(100).fill(null).map(() => {
     const position = new Vector(Math.random() * width, Math.random() * height);
     const velocity = new Vector(Math.random(), Math.random());
     return new Boid(position, velocity);
@@ -31,7 +31,7 @@ function Animal(props: IAnimal) {
 function App() {
     const [birds, setBirds] = useState(initBirds);
     const nextBirds = birds.map((bird) => bird.nextState(birds));
-    setTimeout(() => setBirds(nextBirds), 100);
+    useEffect(() => {setTimeout(() => setBirds(nextBirds), 100)});
 
     return (
         <div>
