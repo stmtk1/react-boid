@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import Triangle from './Triangle';
 import Vector from './Vector';
 import Boid from './Boid';
@@ -32,10 +30,11 @@ function App() {
     const [birds, setBirds] = useState(initBirds);
     const nextBirds = birds.map((bird) => bird.nextState(birds));
     useEffect(() => {setTimeout(() => setBirds(nextBirds), 100)});
+    const viewBox = `0 0 ${width} ${height}`
 
     return (
         <div>
-            <svg width="600" height="400" viewBox="0 0 600 400">
+            <svg width={width} height={height} viewBox={viewBox}>
                 {birds.map((bird, i) => (<Animal boid={bird} key={i} />))}
             </svg>
         </div>
