@@ -6,7 +6,7 @@ import Boid from './Boid';
 const width = 600;
 const height = 400;
 
-const initBirds = new Array(100).fill(null).map(() => {
+const initBirds = new Array(1000).fill(null).map(() => {
     const position = new Vector(Math.random() * width, Math.random() * height);
     const velocity = new Vector(Math.random(), Math.random());
     return new Boid(position, velocity);
@@ -28,8 +28,8 @@ function Animal(props: IAnimal) {
 
 function App() {
     const [birds, setBirds] = useState(initBirds);
-    const nextBirds = birds.map((bird) => bird.nextState(birds));
-    useEffect(() => {setTimeout(() => setBirds(nextBirds), 100)});
+    const nextBirds = birds.map((bird) => bird.nextState(birds, width, height));
+    useEffect(() => {setTimeout(() => setBirds(nextBirds), 50)});
     const viewBox = `0 0 ${width} ${height}`
 
     return (
