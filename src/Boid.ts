@@ -25,25 +25,25 @@ function alignment(self: Boid, others: Array<Boid>): Vector {
         .reduce((a, b) => { a.add(b); return a; }).normalize().mul(alignmentWeight);
 }
 
-class Boid {
+export default class Boid {
     velocity: Vector;
     position: Vector;
-    id: number
 
-    constructor(id: number) {
-        const theta = Math.PI * 2 * Math.random();
-        this.velocity = new Vector(Math.cos(theta), Math.sin(theta));
+    constructor(position: Vector, velocity: Vector) {
+        this.velocity = velocity;
+        this.position = position;
+        this.velocity.normalize();
         this.velocity.mul(velocitySize);
-        this.position = new Vector(width * Math.random(), height * Math.random());
-        this.id = id;
     }
 
-    nextState(birds: Array<Boid>) {
-        this.position.add(this.velocity);
-
+    nextState(birds: Array<Boid>): Boid {
         const velocity = new Vector(0, 0);
         const others = birds.filter((other) => other.position.distance(this.position) > 0)
         velocity.add(cohension(this, others));
-        velocity.normalize();
+        velocity.add(separation(this, others));
+        velocity.add(alignment(this, others));
+        const position = this.position.clone();
+        position.add(this.velocity);
+        return new Boid(position, velocity);
     }
 }

@@ -46,7 +46,10 @@ export default class Vector {
     }
 
     normalize(): Vector {
-        this.div(this.size());
+        const size = this.size();
+        if (size !== 0) {
+            this.div(size);
+        }
         return this;
     }
 }
